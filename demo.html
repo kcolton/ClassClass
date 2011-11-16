@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Class Test</title>
+        
+        <script type="text/javascript" src="classclass.js"></script>
+        <script type="text/javascript">
+        
+        /**
+         * We define a number of classes in a heirarchy and then demo
+         * imporant OO features such as calling the parent function,
+         * method overriding and lookup
+         */
+        
+        /**
+         * Define the Animal class
+         */
+        new Class('Animal').With({
+            __construct: function(name)
+            {
+                this.name = name;
+                console.log('constructing animal ' + this.name);
+            },
+            
+            foo: function()
+            {
+                console.log('foo animal ' + this.name);
+                // This will go all the way back down to the base bar for the object
+                this.bar();
+            }
+        });
+        
+        /**
+         * Define the K9 class
+         */
+        new Class('K9').Extends('Animal').With({
+            __construct: function(name)
+            {
+                console.log('constructing k9 ' + name);
+                // Calling parents also works for constructors
+                this.parentFunc(name);
+            },
+            
+            foo: function()
+            {
+                console.log('foo k9 ' + this.name);
+                // Call parnet foo
+                this.parentFunc();
+            },
+            
+            bar: function()
+            {
+                console.log('bar k9 ' + this.name);
+            }
+        });
+        
+        /**
+         * Define the Animal class
+         */
+        new Class('Dog').Extends('K9').With({
+            
+            // Note there is no constructor here and K9 constructor will automatically get called
+            
+            foo: function()
+            {
+                console.log('foo dog ' + this.name);
+                // Call the parent foo
+                this.parentFunc();
+            },
+            
+            bar: function()
+            {
+                console.log('bar dog ' + this.name);
+                // Call the parent bar
+                this.parentFunc();
+            }
+        });
+        
+        var wonton = new Dog('wonton');
+        wonton.foo();
+        
+        </script>
+        
+        
+    </head>
+    <body>
+    </body>
+</html>
